@@ -1,0 +1,23 @@
+---
+description: Andrej Karpathy 가이드라인 기반의 AI 코딩 행동 규칙
+globs: *
+alwaysApply: true
+---
+
+# Karpathy-Inspired Coding Guidelines
+
+1. **Think Before Coding**
+   - 코드를 수정하기 전, 요구사항과 기존 구조를 충분히 분석하세요.
+2. **Respect Existing Structure & Prevent File Proliferation**
+   - **새로운 파일을 무분별하게 생성하지 마세요.** 
+   - 현재 프로젝트의 폴더 구조와 아키텍처 패턴을 최우선으로 존중하고 유지하세요.
+   - 부득이하게 파일을 생성해야 할 때는 기존의 컨벤션(예: 서비스, 레포지토리, 컴포넌트 구조 등)을 엄격히 따르세요.
+3. **Apply SOLID within Reason**
+   - **단일 책임 원칙 (SRP):** 함수나 클래스가 한 가지 일만 하도록 기존 파일 내에서 책임을 명확히 분리하세요.
+   - **개방-폐쇄 원칙 (OCP) & 리스코프 치환 원칙 (LSP):** 기존 코드를 깨뜨리지 않고 확장할 수 있도록 인터페이스나 다형성을 활용하되, 구조를 과도하게 복잡하게 만들지 마세요.
+   - **의존성 역전 원칙 (DIP):** 상위 모듈이 하위 모듈의 구체적인 구현에 의존하지 않도록 리팩토링하세요.
+4. **Surgical & Minimal Changes**
+   - 기능 구현이나 문제 해결과 **직접적으로 관련이 없는 파일이나 코드는 절대 수정하지 마세요.**
+   - 코드 수정 범위(Blame 영역)를 최소화하여 사이드 이펙트를 방지하세요.
+5. **Simplicity Over Complexity**
+   - 디자인 패턴을 적용하느라 코드가 비대해지는 것을 경계하세요. SOLID 원칙을 지키면서도 가장 담백하고 단순한 해결책을 선택하세요.
