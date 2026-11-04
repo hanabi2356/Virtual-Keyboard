@@ -66,6 +66,8 @@ LRESULT WindowInit::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         case WM_SIZE:
             app->m_clientWidth = LOWORD(lParam);
+            app->m_clientHeight = HIWORD(lParam);
+            
         }
     }
     

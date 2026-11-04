@@ -12,7 +12,9 @@ private:
 	int m_clientWidth = 480, m_clientHeight = 512;
 	std::wstring m_windowCaption = L"Virtual Keyboard";
 
-	bool m_pause;
+	bool m_pause = false;
+	bool m_maximized = false;
+	bool m_minimized = false;
 public:
 	bool InitMainWindow(HINSTANCE hinstance);
 	LRESULT static CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
