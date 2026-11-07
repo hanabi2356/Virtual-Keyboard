@@ -67,9 +67,53 @@ LRESULT WindowInit::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_SIZE:
             app->m_clientWidth = LOWORD(lParam);
             app->m_clientHeight = HIWORD(lParam);
-            
+            if (wParam == SIZE_MINIMIZED)
+            {
+                app->m_pause = true;
+                app->m_minimized = true;
+                app->m_maximized = false;
+            }
+            else if (wParam == SIZE_MAXIMIZED)
+            {
+                app->m_pause = false;
+                app->m_minimized = false;
+                app->m_maximized = true;
+                //Resize
+            }
+            else if (wParam == SIZE_RESTORED)
+            {
+                if (app->m_minimized)
+                {
+                    app->m_pause = false;
+                    app->m_minimized = false;
+                    //Resize
+                }
+                else if (app->m_maximized)
+                {
+                    app->m_pause = false;
+                    app->m_maximized = false;
+                    //Resize
+                }
+                else
+                {
+                    //Resize
+                }
+            }
+            return 0;
+        case WM_ENTERSIZEMOVE:
+
+            return 0;
+        case WM_EXITSIZEMOVE:
+            return 0;
+        case WM_LBUTTONDOWN:
+            return 0;
+        case WM_MOUSEMOVE:
+            return 0;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
         }
     }
     
-    return LRESULT();
+    return DefWindowProc(hwnd, msg, wParam, lParam);
 }

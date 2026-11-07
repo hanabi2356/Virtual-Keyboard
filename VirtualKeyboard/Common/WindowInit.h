@@ -3,6 +3,8 @@
 #include<iostream>
 #include<string>
 
+using ResizeCallback = void(*)(int width, int height, void* user);
+
 class WindowInit
 {
 private:
@@ -15,6 +17,9 @@ private:
 	bool m_pause = false;
 	bool m_maximized = false;
 	bool m_minimized = false;
+
+	ResizeCallback m_onResize = nullptr;
+	void* m_resizeUser = nullptr;
 public:
 	bool InitMainWindow(HINSTANCE hinstance);
 	LRESULT static CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -26,5 +31,11 @@ public:
 public:
 	HINSTANCE GetInstance() const { return m_hInstance; }
 	HWND GetHwnd() const { return m_hwnd; }
+
+	void SetResizeCallback(ResizeCallback cb, void* user)
+	{
+		m_onResize = cb;
+		m_resizeUser = user;
+	}
 };
 
