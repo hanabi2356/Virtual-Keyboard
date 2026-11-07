@@ -1,10 +1,23 @@
-#include "../Common/Common.h"
+#include "../Common/WindowInit.h"
+#include "../Common/DirectxInit.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
     _In_ LPWSTR    lpCmdLine,
     _In_ int       nCmdShow)
 {
-    
+    WindowInit window;
+    DirectxInit dx(&window);
+
+    if (window.InitMainWindow(hInstance) == false) return 0;
+    if (dx.DXInit() == false) return 0;
+
+    MSG msg = {};
+    while (GetMessage(&msg, nullptr, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+    return static_cast<int>(msg.wParam);
 }
 

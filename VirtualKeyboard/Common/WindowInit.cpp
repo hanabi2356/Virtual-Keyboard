@@ -94,10 +94,12 @@ LRESULT WindowInit::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     app->m_maximized = false;
                     //Resize
                 }
-                else
-                {
-                    //Resize
-                }
+            }
+            if (wParam != SIZE_MINIMIZED && app->m_onResize
+                && app->m_clientWidth > 0 && app->m_clientHeight > 0)
+            {
+                app->m_onResize(app->m_clientWidth, app->m_clientHeight,
+                    app->m_resizeUser);
             }
             return 0;
         case WM_ENTERSIZEMOVE:

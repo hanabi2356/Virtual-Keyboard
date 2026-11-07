@@ -132,6 +132,6 @@ private:
 /// get/set
 /// </summary>
 public:
-	ID3D12Resource* GetCurrentBackBuffer()const;
+	ID3D12Resource* GetCurrentBackBuffer()const { return m_swapChainBuffer[m_currentSwapChain].Get(); }
 };
 
