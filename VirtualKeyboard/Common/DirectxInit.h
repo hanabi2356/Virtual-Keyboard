@@ -58,6 +58,7 @@ public:
 	void FlushCommandQueue();
 
 	
+	bool Render();
 
 private:
 	/// <summary>
@@ -127,6 +128,11 @@ private:
 	/// <returns></returns>
 	bool OnResize(int width, int height);
 
+	/// <summary>
+	/// 현재 백버퍼에 해당하는 RTV 핸들을 반환한다
+	/// </summary>
+	/// <returns></returns>
+	D3D12_CPU_DESCRIPTOR_HANDLE CurrentRenderTargetView()const;
 
 /// <summary>
 /// get/set

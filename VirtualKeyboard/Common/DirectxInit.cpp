@@ -172,6 +172,41 @@ void DirectxInit::FlushCommandQueue()
     }
 }
 
+bool DirectxInit::Render()
+{
+    if (!m_cmdAllocator || !m_cmdList || !m_swapChain) return false;
+    if (FAILED(m_cmdAllocator->Reset())) return false;
+    if (FAILED(m_cmdList->Reset(m_cmdAllocator.Get(), nullptr))) return false;
+
+    m_cmdList->RSSetViewports(1, &m_viewPort);
+    m_cmdList->RSSetScissorRects(1, &m_scissorRect);
+
+    CD3DX12_RESOURCE_BARRIER target = CD3DX12_RESOURCE_BARRIER::Transition(GetCurrentBackBuffer(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+    m_cmdList->ResourceBarrier(1, &target);
+
+    D3D12_CPU_DESCRIPTOR_HANDLE rtv = CurrentRenderTargetView();
+    D3D12_CPU_DESCRIPTOR_HANDLE dsv = 
+        m_dsvHeap->GetCPUDescriptorHandleForHeapStart();
+
+    const float clearColor[] = { 0.12f, 0.12f, 0.14f, 1.0f };
+    m_cmdList->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
+    m_cmdList->ClearDepthStencilView(dsv, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+
+    CD3DX12_RESOURCE_BARRIER present = CD3DX12_RESOURCE_BARRIER::Transition(GetCurrentBackBuffer(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+    m_cmdList->ResourceBarrier(1, &present);
+
+    if (FAILED(m_cmdList->Close())) return false;
+
+    ID3D12CommandList* lists[] = { m_cmdList.Get() };
+    m_cmdQueue->ExecuteCommandLists(1, lists);
+
+    if (FAILED(m_swapChain->Present(1, 0))) return false;
+
+    m_currentSwapChain = m_swapChain->GetCurrentBackBufferIndex();
+    FlushCommandQueue();
+    return true;
+}
+
 bool DirectxInit::OnResize(int width, int height)
 {
     if (!m_device || width <= 0 || height <= 0) return false;
@@ -196,4 +231,13 @@ bool DirectxInit::OnResize(int width, int height)
 
     SetViewportAndScissor(width, height);
     return true;
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE DirectxInit::CurrentRenderTargetView() const
+{
+    D3D12_CPU_DESCRIPTOR_HANDLE rtv =
+        m_rtvHeap->GetCPUDescriptorHandleForHeapStart();
+    rtv.ptr += static_cast<SIZE_T>(m_currentSwapChain) * m_rtvDescriptorSize;
+
+    return rtv;
 }

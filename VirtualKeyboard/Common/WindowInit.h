@@ -31,7 +31,7 @@ public:
 public:
 	HINSTANCE GetInstance() const { return m_hInstance; }
 	HWND GetHwnd() const { return m_hwnd; }
-
+	bool IsPause()const { return m_pause; }
 	void SetResizeCallback(ResizeCallback cb, void* user)
 	{
 		m_onResize = cb;
