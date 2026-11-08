@@ -139,6 +139,7 @@
     <ClCompile Include="..\Common\Application.cpp" />
     <ClCompile Include="..\Common\DirectxInit.cpp" />
     <ClCompile Include="..\Common\GameTimer.cpp" />
+    <ClCompile Include="..\Common\KeyboardImage.cpp" />
     <ClCompile Include="..\Common\WindowInit.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="VirtualKeyboard.cpp">
@@ -151,6 +152,9 @@
   <ItemGroup>
     <Image Include="small.ico" />
     <Image Include="VirtualKeyboard.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shader\TextureQuad.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

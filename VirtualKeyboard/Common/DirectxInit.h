@@ -38,6 +38,13 @@ private:
 	DXGI_FORMAT m_depthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	WindowInit* m_windowInit = nullptr;
+
+	ComPtr<ID3D12RootSignature> m_rootSignature;
+	ComPtr<ID3D12PipelineState> m_pipeline;
+	ComPtr<ID3D12Resource> m_texture;
+	ComPtr<ID3D12DescriptorHeap> m_srvHeap;
+	ComPtr<ID3D12Resource> m_quad;
+	D3D12_VERTEX_BUFFER_VIEW m_quadView = {};
 public:
 
 	/// <summary>
@@ -57,8 +64,20 @@ public:
 	/// </summary>
 	void FlushCommandQueue();
 
-	
 	bool Render();
+
+	/// <summary>
+	/// 루트 시그니처와 PSO를 만듬
+	/// </summary>
+	/// <param name="hlsl"></param>
+	/// <returns></returns>
+	bool CreatePSO(const wchar_t* path);
+
+	/// <summary>
+	/// 천지인 자판 비트맵을 텍스처로 올리고 화면 전체 사각형을 만든다.
+	/// shortcut: 텍스처는 처음 클라이언트 크기이다. 창 크기가 바뀌면 늘려 그린다.
+	/// </summary>
+	bool CreateKeyboard();
 
 private:
 	/// <summary>
@@ -139,5 +158,7 @@ private:
 /// </summary>
 public:
 	ID3D12Resource* GetCurrentBackBuffer()const { return m_swapChainBuffer[m_currentSwapChain].Get(); }
+	ID3D12Device* GetDevice() const { return m_device.Get(); }
+	ID3D12GraphicsCommandList* GetCmdList() const { return m_cmdList.Get(); }
 };
 

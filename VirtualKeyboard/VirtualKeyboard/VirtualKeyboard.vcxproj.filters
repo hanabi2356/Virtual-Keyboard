@@ -16,6 +16,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{91102bd3-c7ae-439d-9825-e6c9a4e27f5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{03e22bfe-9d95-4f0a-b8e9-55b0baf80b96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,5 +87,10 @@
     <Image Include="VirtualKeyboard.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shader\TextureQuad.hlsl">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

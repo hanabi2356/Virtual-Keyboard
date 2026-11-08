@@ -11,7 +11,7 @@ private:
 	HINSTANCE m_hInstance;
 	HWND m_hwnd;
 
-	int m_clientWidth = 480, m_clientHeight = 512;
+	int m_clientWidth = 480, m_clientHeight = 360;
 	std::wstring m_windowCaption = L"Virtual Keyboard";
 
 	bool m_pause = false;

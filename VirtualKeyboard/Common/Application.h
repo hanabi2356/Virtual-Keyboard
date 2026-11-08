@@ -32,5 +32,11 @@ public:
 
 protected:
 	virtual void Update(float dt);
+
+/// <summary>
+/// get/set
+/// </summary>
+protected:
+	DirectxInit* GetDx()const { return m_dx; }
 };
 
