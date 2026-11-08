@@ -1,5 +1,5 @@
 #include "DirectxInit.h"
-#include "KeyboardImage.h"
+#include "../VirtualKeyboard/KeyboardImage.h"
 #include<fstream>
 #include<sstream>
 #include<string>
@@ -354,7 +354,7 @@ bool DirectxInit::CreateKeyboard()
     if (width <= 0 || height <= 0) return false;
 
     KeyboardBitmap image = {};
-    if (!CreateCheonjiinBitmap(width, height, image)) return false;
+    if (!CreateBitmap(width, height, m_label, image)) return false;
 
     D3D12_RESOURCE_DESC texDesc = {};
     texDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
@@ -370,7 +370,7 @@ bool DirectxInit::CreateKeyboard()
     if (FAILED(m_device->CreateCommittedResource(
         &defaultHeap, D3D12_HEAP_FLAG_NONE, &texDesc, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&m_texture))))
     {
-        DestroyCheonjiinBitmap(image);
+        DestroyBitmap(image);
         return false;
     }
 
@@ -386,14 +386,14 @@ bool DirectxInit::CreateKeyboard()
     if (FAILED(m_device->CreateCommittedResource(
         &uploadHeap, D3D12_HEAP_FLAG_NONE, &uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&upload))))
     {
-        DestroyCheonjiinBitmap(image);
+        DestroyBitmap(image);
         return false;
     }
 
     BYTE* mapped = nullptr;
     if (FAILED(upload->Map(0, nullptr, reinterpret_cast<void**>(&mapped))))
     {
-        DestroyCheonjiinBitmap(image);
+        DestroyBitmap(image);
         return false;
     }
     const BYTE* src = static_cast<const BYTE*>(image.bits);
@@ -406,7 +406,7 @@ bool DirectxInit::CreateKeyboard()
             reinterpret_cast<UINT*>(to)[x] |= 0xFF000000;
     }
     upload->Unmap(0, nullptr);
-    DestroyCheonjiinBitmap(image);
+    DestroyBitmap(image);
 
     D3D12_DESCRIPTOR_HEAP_DESC srvDesc = {};
     srvDesc.NumDescriptors = 1;
@@ -464,4 +464,13 @@ bool DirectxInit::CreateKeyboard()
     m_cmdQueue->ExecuteCommandLists(1, lists);
     FlushCommandQueue();
     return true;
+}
+
+/// <summary>
+/// 위 라벨 글자를 바꾸고 자판 텍스처를 다시 만든다.
+/// </summary>
+void DirectxInit::SetKeyboardLabel(const wchar_t* label)
+{
+    m_label = label ? label : L"";
+    CreateKeyboard();
 }

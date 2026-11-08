@@ -128,9 +128,12 @@
     <ClInclude Include="..\Common\d3dx12.h" />
     <ClInclude Include="..\Common\DirectxInit.h" />
     <ClInclude Include="..\Common\GameTimer.h" />
+    <ClInclude Include="..\Common\InputManager.h" />
     <ClInclude Include="..\Common\MonoSingleton.h" />
     <ClInclude Include="..\Common\WindowInit.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="CheonjiinEngine.h" />
+    <ClInclude Include="KeyboardImage.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VirtualKeyboard.h" />
@@ -139,8 +142,10 @@
     <ClCompile Include="..\Common\Application.cpp" />
     <ClCompile Include="..\Common\DirectxInit.cpp" />
     <ClCompile Include="..\Common\GameTimer.cpp" />
-    <ClCompile Include="..\Common\KeyboardImage.cpp" />
+    <ClCompile Include="..\Common\InputManager.cpp" />
     <ClCompile Include="..\Common\WindowInit.cpp" />
+    <ClCompile Include="CheonjiinEngine.cpp" />
+    <ClCompile Include="KeyboardImage.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="VirtualKeyboard.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

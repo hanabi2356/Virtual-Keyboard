@@ -45,6 +45,7 @@ private:
 	ComPtr<ID3D12DescriptorHeap> m_srvHeap;
 	ComPtr<ID3D12Resource> m_quad;
 	D3D12_VERTEX_BUFFER_VIEW m_quadView = {};
+	const wchar_t* m_label = L"";
 public:
 
 	/// <summary>
@@ -78,6 +79,11 @@ public:
 	/// shortcut: 텍스처는 처음 클라이언트 크기이다. 창 크기가 바뀌면 늘려 그린다.
 	/// </summary>
 	bool CreateKeyboard();
+
+	/// <summary>
+	/// 위 라벨 글자를 바꾸고 자판 텍스처를 다시 만든다.
+	/// </summary>
+	void SetKeyboardLabel(const wchar_t* label);
 
 private:
 	/// <summary>

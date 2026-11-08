@@ -1,5 +1,6 @@
 #include "WindowInit.h"
-
+#include "InputManager.h"
+#include<windowsx.h>
 /// <summary>
 /// 창 클래스를 등록하고 클라이언트 크기 480x512로 메인 윈도우를 만든다.
 /// 마지막 인자 this는 WM_NCCREATE에서 인스턴스를 찾는 데 쓴다.
@@ -108,6 +109,10 @@ LRESULT WindowInit::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_EXITSIZEMOVE:
             return 0;
         case WM_LBUTTONDOWN:
+            InputManager::GetInstance()->OnLeftDown(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+            return 0;
+        case WM_LBUTTONUP:
+            InputManager::GetInstance()->OnLeftUp();
             return 0;
         case WM_MOUSEMOVE:
             return 0;

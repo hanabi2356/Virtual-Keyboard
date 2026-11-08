@@ -1,4 +1,5 @@
 #pragma once
+#include "../VirtualKeyboard/CheonjiinEngine.h"
 class WindowInit;
 class DirectxInit;
 
@@ -7,6 +8,7 @@ class Application
 private:
 	WindowInit* m_window = nullptr;
 	DirectxInit* m_dx = nullptr;
+	CheonjiinEngine m_ime;
 
 public:
 
@@ -39,4 +41,3 @@ protected:
 protected:
 	DirectxInit* GetDx()const { return m_dx; }
 };
-
