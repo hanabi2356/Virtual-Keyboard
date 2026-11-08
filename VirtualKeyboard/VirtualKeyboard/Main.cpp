@@ -1,5 +1,6 @@
 #include "../Common/WindowInit.h"
 #include "../Common/DirectxInit.h"
+#include "../Common/Application.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -12,12 +13,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     if (window.InitMainWindow(hInstance) == false) return 0;
     if (dx.DXInit() == false) return 0;
 
-    MSG msg = {};
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
-    return static_cast<int>(msg.wParam);
+    Application app(window, dx);
+    return app.Run();
 }
 
